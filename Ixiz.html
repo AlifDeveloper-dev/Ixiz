@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ℍ𝕒𝕔𝕜𝕖𝕕 𝔹𝕪 𝕀𝕩𝕚𝕫𝔻𝕖𝕧 ♛</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Courier New', monospace;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    /* Background video */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+    /* Canvas Matrix */
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: -2;
+    }
+    .container {
+      position: relative;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      z-index: 1;
+    }
+    /* Efek warna berganti + glitch untuk h1 */
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      animation: colorChange 3s infinite;
+      position: relative;
+    }
+    h1.glitch:before,
+    h1.glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.8;
+      color: white;
+    }
+    h1.glitch:before {
+      left: 2px;
+      text-shadow: -2px 0 red;
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+    h1.glitch:after {
+      left: -2px;
+      text-shadow: -2px 0 blue;
+      animation: glitch-anim2 3s infinite linear alternate-reverse;
+    }
+    @keyframes colorChange {
+      0% { color: #ff0000; }
+      25% { color: #ffff00; }
+      50% { color: #0000ff; }
+      75% { color: #00ff00; }
+      100% { color: #ff0000; }
+    }
+    @keyframes glitch-anim {
+      0% { clip: rect(42px, 9999px, 44px, 0); }
+      5% { clip: rect(12px, 9999px, 85px, 0); }
+      10% { clip: rect(80px, 9999px, 20px, 0); }
+      15% { clip: rect(30px, 9999px, 70px, 0); }
+      20% { clip: rect(55px, 9999px, 90px, 0); }
+      /* ...silakan lanjut keyframe glitch di sini... */
+      100% { clip: rect(42px, 9999px, 44px, 0); }
+    }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(12px, 9999px, 40px, 0); }
+      5% { clip: rect(80px, 9999px, 90px, 0); }
+      /* ...silakan lanjut keyframe glitch di sini... */
+      100% { clip: rect(12px, 9999px, 40px, 0); }
+    }
+    /* Efek RGB bergerak untuk h2 */
+    h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background-image: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);
+      background-size: 300%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: rgbAnimation 5s infinite linear;
+      margin-bottom: 15px;
+    }
+    @keyframes rgbAnimation {
+      0% { background-position: 0%; }
+      100% { background-position: 300%; }
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    /* Biar audio center & ada jarak di atas */
+    audio {
+      display: block;
+      margin: 20px auto 0 auto; /* 20px top, auto horizontal, 0 bottom */
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Video Background -->
+  <video autoplay loop muted id="bg-video">
+    <source src="https://files.catbox.moe/ub846d.mp4" type="video/mp4">
+    Browser kamu tidak mendukung elemen video.
+  </video>
+
+  <!-- Matrix Rain -->
+  <canvas id="matrix"></canvas>
+
+  <div class="container">
+    <h1 class="glitch" data-text="BlackGhost 4.0.4">BlackGhost 4.0.4</h1>
+     <img src="https://files.catbox.moe/lv8op3.jpg" alt="𝔹𝕝𝕒𝕔𝕜𝔾𝕙𝕠𝕤𝕥 𝟜.𝟘.𝟜" style="width: 600px; height: auto;">
+    <h2>ℍ𝕒𝕔𝕜𝕖𝕣𝕤 𝔹𝕪 ♛ 𝕀𝕏𝕀ℤ ♛</h2>
+    <p>Kepada Pihak Website, Tolong Carikan Saya Pasangan Spek yali yali :)</p>
+    <p>DIS IS INDONESIAN © 2017</p>
+    <!-- Audio DIPINDAH ke dalam container, di bawah paragraf -->
+    <audio autoplay loop controls>
+      <source src="https://files.catbox.moe/5q1s77.mp3" type="audio/mpeg">
+      Browser kamu tidak mendukung elemen audio.
+    </audio>
+  </div>
+
+  <!-- Script Matrix Rain -->
+  <script>
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = "01";
+    const fontSize = 15;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+      drops[x] = 1;
+    }
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "lime";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+  </script>
+</body>
+</html>
